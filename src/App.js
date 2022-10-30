@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
+import Layout from "./components/layout/Layout";
 import Home from "./views/Home";
-import HappinessAndMindfulness from "./views/HappinessAndMindfulness";
+import Category from "./views/Category";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Routes >
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="happinessmindfulness" element={<HappinessAndMindfulness />} />
+          <Route path="category" element={<Category />} />
         </Route>
       </Routes>
     </div>
