@@ -1,9 +1,10 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Layout } from "antd";
 import HeaderLayoout from "./Header";
 
 function AppLayout() {
   const { Header, Content } = Layout;
+  const location = useLocation();
   
   return (
     <Layout>
@@ -20,7 +21,7 @@ function AppLayout() {
       >
         <HeaderLayoout />
       </Header>
-      <Content className="content-layout-wrapper">
+      <Content className="content-layout-wrapper" style={{ marginTop: location.pathname === "/" ? "16px" : null }}>
         <Outlet />
       </Content>
     </Layout>

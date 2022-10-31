@@ -13,21 +13,29 @@ function Navigation() {
 
   return (
     <nav className="nav-container">
-      <ul className="nav-box">
-        {categories && categories.length > 0 && 
-          categories.map(cat => (
-            <li key={cat.id} className="nav-content">
-              <Link 
-                to="/category"
-                state={{ categooryId: cat.id, name: cat.name }}
-                className="nav-link"
-              >
-                { cat.name }
-              </Link>
+      {categories && categories.length > 0 && 
+        <>
+          <div style={{ color: "rgb(76, 79, 84)", fontSize: "1.1rem", fontWeight: 900, paddingLeft: 12, marginBottom: 12 }}>Explore Categories</div>
+          <ul className="nav-box">
+            {
+              categories.map(cat => (
+                <li key={cat.id} className="nav-content">
+                  <Link 
+                    to="/category"
+                    state={{ categooryId: cat.id, name: cat.name }}
+                    className="nav-link"
+                  >
+                    { cat.name }
+                  </Link>
+                </li>
+              ))
+            }
+            <li className="nav-content">
+              <Link to="/favourite" className="nav-link">Favourite</Link>
             </li>
-          ))
-        }
-      </ul>
+          </ul>
+        </>
+      }
     </nav>
   );
 }

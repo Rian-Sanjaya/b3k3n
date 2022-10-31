@@ -11,11 +11,13 @@ function Header() {
   return (
     <div className="layout-header-box">
       {location.pathname !== "/" &&
-        <button onClick={() => navigate(-1)}>
-          <LeftOutlined />
-        </button>
+        <>
+          <button onClick={() => navigate(-1)}>
+            <LeftOutlined />
+          </button>
+          <span className="title">{ title }</span>
+        </>
       }
-      <span className="title">{ title }</span>
     </div>
   )
 }
