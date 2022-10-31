@@ -31,7 +31,7 @@ function Navigation() {
               ))
             }
             <li className="nav-content">
-              <Link to="/favourite" className="nav-link">Favourite</Link>
+              <Link to="/favourite" state={{ categories: categories }} className="nav-link">Favourite</Link>
             </li>
           </ul>
         </>
