@@ -8,7 +8,15 @@ function AppLayout() {
   return (
     <Layout>
       <Header
-        style={{ position: "fixed", zIndex: 1, width: "100%", background: "#fff" }}
+        style={{ 
+          position: "fixed", 
+          zIndex: 1, 
+          width: "100%", 
+          background: "#f0f2f5", 
+          height: "initial", 
+          lineHeight: "initial",
+          padding: "0 16px"
+        }}
       >
         <HeaderLayoout />
       </Header>
