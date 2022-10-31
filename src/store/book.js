@@ -20,6 +20,12 @@ export function bookReducer(state = initialState, action) {
         loading: action.payload,
       };
 
+    case UPDATE_FAVOURITE:
+      return {
+        ...state,
+        books: action.payload,
+      }
+
     default:
       return state;
   }
@@ -40,15 +46,37 @@ export const setLoading = (val) => ({
   payload: val,
 });
 
+export const updateFavourite = (books) => ({
+  type: UPDATE_FAVOURITE,
+  payload: books,
+})
+
 export function fetchBooks(categoryId, page = 0, size = 10) {
   return (dispatch) => {
     return new Promise((resolve, reject) => {
       dispatch(setLoading(true));
       getAPI(BOOKS_API.GET_BY_CATEGORYID(categoryId, page, size))
         .then(res => {
-          dispatch(booksFetch(res.data))
+          // add state books data with favorite
+          const favourite = JSON.parse(localStorage.getItem("b3k3nFav"));
+          let booksWithFavourite;
+          if (favourite) {
+            // if the book is already in favorite local storage
+            // set the favorite to true else set to false
+            booksWithFavourite = res.data.map(book => {
+              const found = favourite.find(fav => fav.id === book.id);
+              if (found) return { ...book, favourite: true };
+              else return { ...book, favourite: false };
+            });
+          } else {
+            // if no local storage set all favorite to false
+            booksWithFavourite = res.data.map(book => (
+              { ...book, favourite: false }
+            ))
+          }
+          dispatch(booksFetch(booksWithFavourite))
           dispatch(setLoading(false));
-          resolve(res.data);
+          resolve(booksWithFavourite);
         })
         .catch(err => {
           console.log("error: ", err.message);
@@ -60,6 +88,26 @@ export function fetchBooks(categoryId, page = 0, size = 10) {
   }
 }
 
+// toggle the favorite in data state movies
+export function onUpdateFavourite(curBook) {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      const state = getState();
+      const books = state.book.books;
+      const updbooks = books.map(book => {
+        if (book.id === curBook.id) {
+          return { ...book, favourite: !curBook.favourite }
+        }
+
+        return book;
+      });
+      dispatch(updateFavourite(updbooks));
+      resolve(updbooks);
+    });
+  };
+}
+
 // action types
 export const BOOKS_FETCH = "book/booksFetch";
 export const SET_LOADING = "book/setLoading";
+export const UPDATE_FAVOURITE = 'book/updateFavourite';
