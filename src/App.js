@@ -10,6 +10,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="category" element={<Category />} />
+          <Route path="favourite" element={<Category />} />
         </Route>
       </Routes>
     </div>

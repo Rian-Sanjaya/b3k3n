@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getCategories, fetchCategories } from "../store/category";
 
@@ -12,18 +12,29 @@ function Navigation() {
   }, [dispatch])
 
   return (
-    <nav>
+    <nav className="nav-container">
       {categories && categories.length > 0 && 
-        categories.map(cat => (
-          <NavLink 
-            key={cat.id} 
-            to="/category"
-            state={{ categooryId: cat.id, name: cat.name }}
-            style={{ marginRight: 8 }}
-          >
-            { cat.name }
-          </NavLink>
-        ))
+        <>
+          <div style={{ color: "rgb(76, 79, 84)", fontSize: "1.1rem", fontWeight: 900, paddingLeft: 12, marginBottom: 12 }}>Explore Categories</div>
+          <ul className="nav-box">
+            {
+              categories.map(cat => (
+                <li key={cat.id} className="nav-content">
+                  <Link 
+                    to="/category"
+                    state={{ categooryId: cat.id, name: cat.name }}
+                    className="nav-link"
+                  >
+                    { cat.name }
+                  </Link>
+                </li>
+              ))
+            }
+            <li className="nav-content">
+              <Link to="/favourite" className="nav-link">Favourite</Link>
+            </li>
+          </ul>
+        </>
       }
     </nav>
   );
