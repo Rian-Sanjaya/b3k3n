@@ -38,6 +38,8 @@ function Category() {
       .then((res) => {
         filteredBooks(res);
       })
+
+    // eslint-disable-next-line
   }, [dispatch, categooryId, currentPage, currentPageSize])
 
   useEffect(() => {
