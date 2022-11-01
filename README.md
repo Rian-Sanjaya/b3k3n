@@ -1,6 +1,6 @@
-### To see  the project live
+### To see  the demo live
 
-[B3k3n](https://chic-gelato-a47be7.netlify.app/)
+[B3k3n](https://remarkable-truffle-6ee85b.netlify.app/)
 
 **API**
 
