@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Pagination, Input, Spin } from "antd";
+import debounce from "lodash.debounce";
 import { titleChanged } from "../store/header";
 import { getBooks, getLoading, fetchBooks, onUpdateFavourite } from "../store/book";
 
@@ -59,6 +60,14 @@ function Category() {
     filteredBooks();
   }, [categorySearch, books])
 
+  const debounceInputChange = useMemo(() => {
+    return debounce(handleInputChange, 700)
+  }, []);
+
+  function handleInputChange(e) {
+    setCategorySearch(e.target.value);
+  }
+
   const onSearchCategory = (value) => {
     setCategorySearch(value);
   }
@@ -106,7 +115,13 @@ function Category() {
       {!loading && 
         <>
           <div className="search-box">
-            <Search placeholder="Search by title or author" onSearch={onSearchCategory} allowClear style={{ width: 230 }} />
+            <Search 
+              placeholder="Search by title or author" 
+              onSearch={onSearchCategory} 
+              onChange={debounceInputChange} 
+              allowClear 
+              style={{ width: 230 }} 
+            />
           </div>
           <ul className="card-container">
             {booksFiltered && booksFiltered.length > 0 &&

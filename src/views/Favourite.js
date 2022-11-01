@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+import debounce from "lodash.debounce";
 import { Input } from "antd";
 import { titleChanged } from "../store/header";
 
@@ -32,6 +33,14 @@ function Favourite() {
 
     filteredBooks();
   }, [categorySearch])
+
+  const debounceInputChange = useMemo(() => {
+    return debounce(handleInputChange, 700)
+  }, []);
+
+  function handleInputChange(e) {
+    setCategorySearch(e.target.value);
+  }
 
   const onSearchCategory = (value) => {
     setCategorySearch(value);
@@ -88,7 +97,13 @@ function Favourite() {
   return (
     <div className={`main-content`}>
       <div className="search-box">
-        <Search placeholder="Search by title or author" onSearch={onSearchCategory} allowClear style={{ width: 230 }} />
+        <Search 
+          placeholder="Search by title or author" 
+          onSearch={onSearchCategory} 
+          onChange={debounceInputChange}
+          allowClear 
+          style={{ width: 230 }} 
+        />
       </div>
       <ul className="card-container">
         {favFiltered && favFiltered.length > 0 &&

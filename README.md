@@ -17,6 +17,7 @@ Features:
 - responsive layout
 - pagination
 - a search to find books based on title or author
+- using debounce on input search
 - allowed user to check their favourite books and remove their favourite
 - list of favourite books
 
